@@ -1,4 +1,4 @@
-package com.kotlin.fundamentos
+package com.kotlin.fundamentos.classe
 
 class Pessoa(var nome: String, var idade: Int) {
     override fun toString(): String {
