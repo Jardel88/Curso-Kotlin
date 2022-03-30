@@ -9,6 +9,7 @@ fun main(){
     var carro = Carro("Preto", 2022, Proprietario("Antonio", 30))
     carro.cor = "Branco"
     carro.anoFabricacao = 2021
+    carro.dono.idade = 31
     println("Cor: " + carro.cor +", Ano de fabricação: "+ carro.anoFabricacao)
     println("Proprietario: " + carro.dono.nome +", Idade: "+ carro.dono.idade)
 }
