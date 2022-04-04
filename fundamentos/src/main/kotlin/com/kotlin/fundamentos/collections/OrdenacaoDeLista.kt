@@ -7,4 +7,7 @@ fun main(){
     println(lista)
     lista.shuffle()
     println(lista)
+    println(lista.contains(3))
+    println(lista.contains(0))
+
 }
