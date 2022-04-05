@@ -1,11 +1,11 @@
 package com.kotlin.mercadolivro.services
 
-import com.kotlin.mercadolivro.controllers.request.PostCustomerRequest
-import com.kotlin.mercadolivro.controllers.request.PutCustomerRequest
 import com.kotlin.mercadolivro.model.CustomerModel
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.ResponseStatus
 
 @Service
 class CustomerService {
@@ -18,22 +18,22 @@ class CustomerService {
         }
         return customers
     }
-    fun create(customer: PostCustomerRequest){
+    fun create(customer: CustomerModel){
 
         var id = if (customers.isEmpty()){
             1
         } else {
-            customers.last().id.toInt() + 1
+            customers.last().id!!.toInt() + 1
         }.toString()
-
-        customers.add(CustomerModel(id, customer.name, customer.email))
+        customer.id = id
+        customers.add(customer)
     }
     fun getCustomer(id: String): CustomerModel {
         return customers.filter { it.id == id }.first()
     }
 
-    fun update(id: String, customer: PutCustomerRequest){
-        customers.filter { it.id == id }.first().let {
+    fun update(customer: CustomerModel){
+        customers.filter { it.id == customer.id }.first().let {
             it.name = customer.name
             it.email = customer.email
         }
