@@ -1,6 +1,7 @@
 package com.kotlin.mercadolivro.services
 
 import com.kotlin.mercadolivro.model.CustomerModel
+import com.kotlin.mercadolivro.repositories.CustomerRepository
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -8,39 +9,33 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.ResponseStatus
 
 @Service
-class CustomerService {
-
-    val customers = mutableListOf<CustomerModel>()
-
-    fun getAll(name: String?): List<CustomerModel>{
-        name?.let {
-            return customers.filter { it.name.contains(name, true) }
-        }
-        return customers
+class CustomerService(
+    val customerRepository: CustomerRepository
+) {
+    
+    fun getAll(): List<CustomerModel>{
+        return customerRepository.findAll()
     }
     fun create(customer: CustomerModel){
-
-        var id = if (customers.isEmpty()){
-            1
-        } else {
-            customers.last().id!!.toInt() + 1
-        }.toString()
-        customer.id = id
-        customers.add(customer)
+       customerRepository.save(customer)
     }
-    fun getCustomer(id: String): CustomerModel {
-        return customers.filter { it.id == id }.first()
+    fun getCustomer(id: Int): CustomerModel {
+        return customerRepository.findById(id).orElseThrow()
     }
 
     fun update(customer: CustomerModel){
-        customers.filter { it.id == customer.id }.first().let {
-            it.name = customer.name
-            it.email = customer.email
+        if (!customerRepository.existsById(customer.id!!)){
+            throw Exception()
         }
-    }
+        customerRepository.save(customer)
+        }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun delete(@PathVariable id: String){
-        customers.removeIf { it.id == id }
+    fun delete(@PathVariable id: Int){
+        if (!customerRepository.existsById(id)){
+            throw Exception()
+        }
+        customerRepository.deleteById(id)
     }
 }
