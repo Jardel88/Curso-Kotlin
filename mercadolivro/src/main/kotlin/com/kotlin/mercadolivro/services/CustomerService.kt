@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus
 class CustomerService(
     val customerRepository: CustomerRepository
 ) {
-    
+
     fun getAll(): List<CustomerModel>{
         return customerRepository.findAll()
     }
