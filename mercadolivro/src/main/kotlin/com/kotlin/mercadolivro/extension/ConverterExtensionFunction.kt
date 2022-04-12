@@ -2,6 +2,7 @@ package com.kotlin.mercadolivro.extension
 
 import com.kotlin.mercadolivro.controllers.request.PostBookRequest
 import com.kotlin.mercadolivro.controllers.request.PostCustomerRequest
+import com.kotlin.mercadolivro.controllers.request.PutBookRequest
 import com.kotlin.mercadolivro.controllers.request.PutCustomerRequest
 import com.kotlin.mercadolivro.enums.BookStatus
 import com.kotlin.mercadolivro.model.BookModel
@@ -19,5 +20,14 @@ fun PostBookRequest.toBookModel(customer: CustomerModel): BookModel{
         price = this.price,
         status = BookStatus.ATIVO,
         customer = customer
+    )
+}
+fun PutBookRequest.toBookModel(previousValue: BookModel): BookModel{
+    return BookModel(
+        id = previousValue.id,
+        name = this.name ?: previousValue.name,
+        price = this.price ?: previousValue.price,
+        status = previousValue.status,
+        customer = previousValue.customer
     )
 }
