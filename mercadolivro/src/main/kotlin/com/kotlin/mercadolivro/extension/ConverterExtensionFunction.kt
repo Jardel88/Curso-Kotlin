@@ -4,6 +4,8 @@ import com.kotlin.mercadolivro.controllers.request.PostBookRequest
 import com.kotlin.mercadolivro.controllers.request.PostCustomerRequest
 import com.kotlin.mercadolivro.controllers.request.PutBookRequest
 import com.kotlin.mercadolivro.controllers.request.PutCustomerRequest
+import com.kotlin.mercadolivro.controllers.response.BookResponse
+import com.kotlin.mercadolivro.controllers.response.CustomerResponse
 import com.kotlin.mercadolivro.enums.BookStatus
 import com.kotlin.mercadolivro.enums.CustomerStatus
 import com.kotlin.mercadolivro.model.BookModel
@@ -30,5 +32,22 @@ fun PutBookRequest.toBookModel(previousValue: BookModel): BookModel{
         price = this.price ?: previousValue.price,
         status = previousValue.status,
         customer = previousValue.customer
+    )
+}
+fun CustomerModel.toResponse(): CustomerResponse {
+    return CustomerResponse(
+        id = this.id,
+        name = this.name,
+        email = this.email,
+        status = this.status
+    )
+}
+fun BookModel.toResponse(): BookResponse {
+    return BookResponse(
+        id = this.id,
+        name = this.name,
+        price = this.price,
+        customer = this.customer,
+        status = this.status
     )
 }
