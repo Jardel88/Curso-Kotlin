@@ -9,5 +9,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface BookRepository : JpaRepository<BookModel, Int>{
      fun findByStatus(status: BookStatus): List<BookModel>
+     fun findByCustomer(customer: CustomerModel): List<BookModel>
 
 }

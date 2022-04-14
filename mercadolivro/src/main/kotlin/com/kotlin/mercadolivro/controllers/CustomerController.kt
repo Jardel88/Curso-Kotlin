@@ -2,6 +2,7 @@ package com.kotlin.mercadolivro.controllers
 
 import com.kotlin.mercadolivro.controllers.request.PostCustomerRequest
 import com.kotlin.mercadolivro.controllers.request.PutCustomerRequest
+import com.kotlin.mercadolivro.extension.toBookModel
 import com.kotlin.mercadolivro.extension.toCustomerModel
 import com.kotlin.mercadolivro.model.CustomerModel
 import com.kotlin.mercadolivro.services.CustomerService
@@ -30,7 +31,8 @@ class CustomerController(
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun update(@PathVariable id: Int, @RequestBody customer: PutCustomerRequest){
-        customerService.update(customer.toCustomerModel(id))
+        val customerSaved = customerService.getById(id)
+        customerService.update(customer.toCustomerModel(customerSaved))
     }
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
