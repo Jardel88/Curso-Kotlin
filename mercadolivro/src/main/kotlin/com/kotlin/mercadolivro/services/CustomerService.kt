@@ -1,6 +1,7 @@
 package com.kotlin.mercadolivro.services
 
 import com.kotlin.mercadolivro.enums.CustomerStatus
+import com.kotlin.mercadolivro.enums.Errors
 import com.kotlin.mercadolivro.exception.NotFoundException
 import com.kotlin.mercadolivro.model.CustomerModel
 import com.kotlin.mercadolivro.repositories.CustomerRepository
@@ -23,7 +24,7 @@ class CustomerService(
        customerRepository.save(customer)
     }
     fun getById(id: Int): CustomerModel {
-        return customerRepository.findById(id).orElseThrow{ NotFoundException("Customer [${id}] not exists.", "ML-0002")}
+        return customerRepository.findById(id).orElseThrow{ NotFoundException(Errors.ML201.message.format(id), Errors.ML201.code)}
     }
 
     fun update(customer: CustomerModel){
