@@ -1,5 +1,7 @@
 package com.kotlin.mercadolivro.controllers.request
 
+
+import com.kotlin.mercadolivro.validation.EmailAvailable
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotEmpty
 
@@ -9,6 +11,6 @@ data class PostCustomerRequest(
     var name: String,
 
     @field:Email(message = "E-mail inválido!")
-    @field:NotEmpty(message = "O e-mail deve ser informado!")
+    @EmailAvailable
     var email: String
     )
